@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 import EstimateAge
 # import random
 from idlelib.tooltip import Hovertip
@@ -76,7 +77,14 @@ class GuessAge(tk.Tk):
     # Define the guess age function
     def guess_age(self):
         # Get the name from the entry field
+
         name = self.name_entry.get()
+        valid_chars = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+
+        # Check if all characters are valid
+        if not all(char in valid_chars or char.isspace() for char in name):
+            messagebox.showerror("Error", "Name can only contain letters.")
+            return
 
         guess_age = EstimateAge.AgifyAPI(name)
         age = guess_age.get_estimated_age()
