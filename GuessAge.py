@@ -21,12 +21,24 @@ class GuessAge(tk.Tk):
 
         self.resizable(False, False) 
 
+        # **Adding a custom icon**
+        # 1. Prepare your icon image:
+        #  - You can use a free image editing software to create a small icon (e.g. 32x32 pixels)
+        #  - Save the image in a format supported by Tkinter, like ICO (.ico) or PNG (.png)
+        #  - Place the icon file in the same directory as your Python script
+        # self.icon_path = "my_icon.ico"  # Replace with your icon file path
+        # self.iconbitmap(self.icon_path)  # Set the window icon
+
         # Create a frame for the inputs
         self.input_frame = tk.Frame(self)
 
         # Create the name label and entry field
         self.name_label = tk.Label(self.input_frame, text="Name:")
         self.name_entry = tk.Entry(self.input_frame)
+
+        # Tooltip for name entry
+        self.name_entry_tooltip = "Enter your name here (including Czech characters)."
+        Hovertip(self.name_entry, self.name_entry_tooltip)
 
         # Create the age label and entry field
         self.age_label = tk.Label(self.input_frame, text="Age:")
@@ -79,13 +91,15 @@ class GuessAge(tk.Tk):
         # Get the name from the entry field
 
         name = self.name_entry.get()
-        valid_chars = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+        valid_chars = set("aábcčdeéěfghiíjklmnňoópqrřsštuúůvwxyzžAÁBCČDEÉFGHIJKLMNOÓPQRŘSŠTUVWXYZŽ")
 
         # Check if all characters are valid
         if not all(char in valid_chars or char.isspace() for char in name):
-            messagebox.showerror("Error", "Name can only contain letters.")
+            self.name_entry.config(bg="pink")
+            messagebox.showerror("Error", "Name can only contains letters.")
             return
 
+        self.name_entry.config(bg="white")
         guess_age = EstimateAge.AgifyAPI(name)
         age = guess_age.get_estimated_age()
 
