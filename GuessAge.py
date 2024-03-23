@@ -1,3 +1,6 @@
+from ctypes import windll
+windll.shcore.SetProcessDpiAwareness(1)
+
 import tkinter as tk
 from tkinter import messagebox
 import EstimateAge
@@ -10,24 +13,19 @@ class GuessAge(tk.Tk):
     This class creates a simple GUI application that allows users to enter a name 
     and guesses their age (from free API).
     """
+
+    MIN_NAME_LENGTH = 2
+
     def __init__(self):
         super().__init__()
 
         # Set the window title
         self.title("Guess Age")
 
-        # Set the window size
-        self.geometry("300x150")
-
         self.resizable(False, False) 
 
-        # **Adding a custom icon**
-        # 1. Prepare your icon image:
-        #  - You can use a free image editing software to create a small icon (e.g. 32x32 pixels)
-        #  - Save the image in a format supported by Tkinter, like ICO (.ico) or PNG (.png)
-        #  - Place the icon file in the same directory as your Python script
-        # self.icon_path = "my_icon.ico"  # Replace with your icon file path
-        # self.iconbitmap(self.icon_path)  # Set the window icon
+        self.icon_path = "IconUser.ico"  # Replace with your icon file path
+        self.iconbitmap(self.icon_path)  # Set the window icon
 
         # Create a frame for the inputs
         self.input_frame = tk.Frame(self)
@@ -86,12 +84,24 @@ class GuessAge(tk.Tk):
         Hovertip(self.clear_button, self.clear_button_tooltip)
         Hovertip(self.close_button, self.close_button_tooltip)
 
+
     # Define the guess age function
     def guess_age(self):
+        
         # Get the name from the entry field
-
         name = self.name_entry.get()
         valid_chars = set("aábcčdeéěfghiíjklmnňoópqrřsštuúůvwxyzžAÁBCČDEÉFGHIJKLMNOÓPQRŘSŠTUVWXYZŽ")
+
+        # Check if the name is empty after removing spaces
+        if not name.strip():  
+                self.name_entry.config(bg="pink")
+                messagebox.showerror("Error", "Please enter a name.")
+                return
+        
+        if len(name) < self.MIN_NAME_LENGTH:
+            self.name_entry.config(bg="pink")
+            messagebox.showerror("Error", "Name must contain at least 2 characters.")
+            return
 
         # Check if all characters are valid
         if not all(char in valid_chars or char.isspace() for char in name):
