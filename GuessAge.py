@@ -1,6 +1,7 @@
 from ctypes import windll
 windll.shcore.SetProcessDpiAwareness(1)
 
+import os
 import tkinter as tk
 from tkinter import messagebox
 import EstimateAge
@@ -24,7 +25,8 @@ class GuessAge(tk.Tk):
 
         self.resizable(False, False) 
 
-        self.icon_path = "IconUser.ico"  # Replace with your icon file path
+        dirname = os.path.dirname(__file__)
+        self.icon_path = os.path.join(dirname, 'IconUser.ico')  # Replace with your icon file path
         self.iconbitmap(self.icon_path)  # Set the window icon
 
         # Create a frame for the inputs
@@ -47,7 +49,7 @@ class GuessAge(tk.Tk):
 
         # Create the guess age button
         self.guess_age_button = tk.Button(self.button_frame, text="Guess Age",
-                                        command=self.guess_age, bg="dodgerblue4", 
+                                        command=self.guess_age, bg=("dodgerblue4"), 
                                         fg="white", width=10)
 
         # Create the clear button
@@ -66,8 +68,8 @@ class GuessAge(tk.Tk):
         self.close_button_tooltip = "Click to close the application."
 
         # Layout the widgets
-        self.input_frame.pack(side=tk.LEFT, padx=5, pady=5)
-        self.button_frame.pack(side=tk.RIGHT, padx=5, pady=5)
+        self.input_frame.pack(side=tk.LEFT, padx=15, pady=15)
+        self.button_frame.pack(side=tk.RIGHT, padx=15, pady=15)
 
         self.name_label.grid(row=0, column=0, pady=5)
         self.name_entry.grid(row=0, column=1, pady=5)
