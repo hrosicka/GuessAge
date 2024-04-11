@@ -35,7 +35,6 @@ The Guess Age application uses tooltips to provide additional information about 
 
 ![](https://github.com/hrosicka/GuessAge/blob/master/doc/GuessAgeTooltip.png)
 
-[MIT LICENSE](https://github.com/hrosicka/GuessAge/blob/master/doc/LICENSE.txt)
 
 
 
