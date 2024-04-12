@@ -5,6 +5,7 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 import customtkinter
+from CTkMessagebox import CTkMessagebox
 import EstimateAge
 # import random
 from idlelib.tooltip import Hovertip
@@ -25,6 +26,8 @@ class GuessAge(tk.Tk):
         self.title("Guess Age")
 
         self.resizable(False, False) 
+
+        self.geometry("680x280")
 
         dirname = os.path.dirname(__file__)
         self.icon_path = os.path.join(dirname, 'IconUser.ico')  # Replace with your icon file path
@@ -55,7 +58,7 @@ class GuessAge(tk.Tk):
         self.guess_age_button = customtkinter.CTkButton(master=self.button_frame,
                                                         text="Guess Age",
                                                         command=self.guess_age,
-                                                        width=100,
+                                                        width=120,
                                                         text_color="white",
                                                         fg_color="#2D1E2F",
                                                         hover_color="#F15946") 
@@ -64,7 +67,7 @@ class GuessAge(tk.Tk):
         self.clear_button = customtkinter.CTkButton(master=self.button_frame,
                                                     text="Clear",
                                                     command=self.clear,
-                                                    width=100,
+                                                    width=120,
                                                     text_color="white",
                                                     fg_color="#2D1E2F",
                                                     hover_color="#F15946") 
@@ -73,7 +76,7 @@ class GuessAge(tk.Tk):
         self.close_button = customtkinter.CTkButton(master=self.button_frame, 
                                                     text="Close",
                                                     command=self.close,
-                                                    width=100,
+                                                    width=120,
                                                     text_color="white",
                                                     fg_color="#2D1E2F",
                                                     hover_color="#F15946")  
@@ -90,8 +93,8 @@ class GuessAge(tk.Tk):
         self.close_button_tooltip = "Click to close the application."
 
         # Layout the widgets
-        self.input_frame.pack(side=tk.LEFT, padx=15, pady=15)
-        self.button_frame.pack(side=tk.RIGHT, padx=15, pady=15)
+        self.input_frame.pack(side=tk.LEFT, padx=40, pady=40)
+        self.button_frame.pack(side=tk.RIGHT, padx=40, pady=40)
 
         self.name_label.grid(row=0, column=0, padx=10, pady=5)
         self.name_entry.grid(row=0, column=1, padx=10, pady=5)
@@ -119,18 +122,42 @@ class GuessAge(tk.Tk):
         # Check if the name is empty after removing spaces
         if not name.strip():  
                 self.name_entry.configure(fg_color="#FF5154")
-                messagebox.showerror("Error", "Please enter a name.")
+                CTkMessagebox(title="Error", 
+                  message="Please enter a name!",
+                  icon="warning",
+                  height=150,
+                  width=300,
+                  button_text_color="white",
+                  button_width=80,
+                  button_color="#2D1E2F",
+                  button_hover_color="#F15946") 
                 return
         
         if len(name) < self.MIN_NAME_LENGTH:
             self.name_entry.configure(fg_color="#FF5154")
-            messagebox.showerror("Error", "Name must contain at least 2 characters.")
+            CTkMessagebox(title="Error", 
+                  message="Name must contain at least 2 characters!",
+                  icon="warning",
+                  height=150,
+                  width=300,
+                  button_text_color="white",
+                  button_width=80,
+                  button_color="#2D1E2F",
+                  button_hover_color="#F15946") 
             return
 
         # Check if all characters are valid
         if not all(char in valid_chars or char.isspace() for char in name):
             self.name_entry.configure(fg_color="#FF5154")
-            messagebox.showerror("Error", "Name can only contains letters.")
+            CTkMessagebox(title="Error", 
+                  message="Name can only contains letters!",
+                  icon="warning",
+                  height=150,
+                  width=300,
+                  button_text_color="white",
+                  button_width=80,
+                  button_color="#2D1E2F",
+                  button_hover_color="#F15946") 
             return
 
         self.name_entry.configure(fg_color="white")
