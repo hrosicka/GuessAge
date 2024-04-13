@@ -3,12 +3,11 @@ windll.shcore.SetProcessDpiAwareness(1)
 
 import os
 import tkinter as tk
-from tkinter import messagebox
 import customtkinter
 from CTkMessagebox import CTkMessagebox
 import EstimateAge
-# import random
 from idlelib.tooltip import Hovertip
+from tktooltip import ToolTip
 
 
 class GuessAge(tk.Tk):
@@ -32,6 +31,7 @@ class GuessAge(tk.Tk):
         dirname = os.path.dirname(__file__)
         self.icon_path = os.path.join(dirname, 'IconUser.ico')  # Replace with your icon file path
         self.iconbitmap(self.icon_path)  # Set the window icon
+        self.warning_ico_path = os.path.join(dirname, 'warning.png') 
 
         # Create a frame for the inputs
         self.input_frame = tk.Frame(self)
@@ -45,7 +45,8 @@ class GuessAge(tk.Tk):
         Hovertip(self.name_entry, self.name_entry_tooltip)
 
         # Create the age label and entry field
-        self.age_label = customtkinter.CTkLabel(self.input_frame, text="Age:")
+        self.age_label = customtkinter.CTkLabel(self.input_frame, 
+                                                text="Age:")
         self.age_entry = customtkinter.CTkEntry(master=self.input_frame,
                                                 fg_color="lightgrey",
                                                 state="readonly")
@@ -81,11 +82,6 @@ class GuessAge(tk.Tk):
                                                     fg_color="#2D1E2F",
                                                     hover_color="#F15946")  
         
-        #def button_function():
-        #    print("button pressed")
-        
-        #self.button = customtkinter.CTkButton(master=self, text="CTkButton", command=button_function) 
-        #self.button.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
         
         # Tooltips
         self.guess_age_button_tooltip = "Click to guess your age based on your name."
@@ -121,10 +117,10 @@ class GuessAge(tk.Tk):
 
         # Check if the name is empty after removing spaces
         if not name.strip():  
-                self.name_entry.configure(fg_color="#FF5154")
+                self.name_entry.configure(fg_color="#F7ABA2")
                 CTkMessagebox(title="Error", 
                   message="Please enter a name!",
-                  icon="warning",
+                  icon=self.warning_ico_path,
                   height=150,
                   width=300,
                   button_text_color="white",
@@ -134,10 +130,10 @@ class GuessAge(tk.Tk):
                 return
         
         if len(name) < self.MIN_NAME_LENGTH:
-            self.name_entry.configure(fg_color="#FF5154")
+            self.name_entry.configure(fg_color="#F7ABA2")
             CTkMessagebox(title="Error", 
                   message="Name must contain at least 2 characters!",
-                  icon="warning",
+                  icon=self.warning_ico_path,
                   height=150,
                   width=300,
                   button_text_color="white",
@@ -148,10 +144,10 @@ class GuessAge(tk.Tk):
 
         # Check if all characters are valid
         if not all(char in valid_chars or char.isspace() for char in name):
-            self.name_entry.configure(fg_color="#FF5154")
+            self.name_entry.configure(fg_color="#F7ABA2")
             CTkMessagebox(title="Error", 
                   message="Name can only contains letters!",
-                  icon="warning",
+                  icon=self.warning_ico_path,
                   height=150,
                   width=300,
                   button_text_color="white",
@@ -182,6 +178,7 @@ class GuessAge(tk.Tk):
         self.name_entry.delete(0, tk.END)
         self.age_entry.delete(0, tk.END)
         self.age_entry.configure(state="readonly")
+        self.name_entry.configure(fg_color="white")
 
     # Define the close function
     def close(self):
