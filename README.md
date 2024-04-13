@@ -6,6 +6,10 @@ This application is a fun way to estimate your age based on your name using the 
 
 ![](https://github.com/hrosicka/GuessAge/blob/master/doc/GuessAge.png)
 
+The buttons change color when you hover your mouse over them, providing visual feedback and enhancing usability by making it clear which button you are interacting with.
+
+![](https://github.com/hrosicka/GuessAge/blob/master/doc/GuessAgeHover.png)
+
 ## Usage:
 
 1. **Enter a name in the "Name" field:**
